@@ -28,6 +28,7 @@ urlpatterns = [
     # path('get-cat/',get_cat),
     path(r'auth/', include('djoser.urls')),
     path(r'auth/', include('djoser.urls.jwt')),
+    
     #  path(r'auth/webauthn/', include('djoser.webauthn.urls')),
     path('student/',StudentAPI.as_view()),
     path('userinfo', views.userinfo, name="userinfo"),

@@ -54,7 +54,7 @@ class Song(models.Model):
 class Client(models.Model):
     name=models.CharField(max_length=100)
     company_name=models.CharField(max_length=100)
-    gst_no=models.IntegerField()
+    gst_no=models.CharField(max_length=100,blank=True,null=True)
     email=models.CharField(max_length=100)	
     phone=models.IntegerField()
     shipping_address=models.CharField(max_length=100)
@@ -99,11 +99,15 @@ class Invoice(models.Model):
     billing_email=models.CharField(max_length=200,blank=True,null=True)
     e_way_no=models.CharField(max_length=200,blank=True,null=True)
     freight=models.IntegerField(blank=True,null=True)
+    total=models.IntegerField(blank=True,null=True)
+    igst_total=models.IntegerField(blank=True,null=True)
+    sgst_total=models.IntegerField(blank=True,null=True)
+    cgst_total=models.IntegerField(blank=True,null=True)
 
 
 
     def __str__(self):
-        return self.name
+        return self.invoice_no
     @property
     def user(self):
         return self.choice_set.all()
@@ -114,9 +118,9 @@ class User(models.Model):
     desc_id=models.IntegerField(null=True)
     Desc=models.CharField(max_length=100,null=True)
     product_id=models.IntegerField(null=True)
-    quantity=models.IntegerField(null=True)
+    quantity=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=3)
     sac=models.IntegerField(null=True)
-    rate=models.IntegerField(null=True)
+    rate=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=3)
 
     unit=models.CharField(max_length=100,null=True)
     cgst=models.IntegerField(null=True,blank=True)
@@ -128,7 +132,7 @@ class User(models.Model):
 
     
     def __str__(self):
-        return self.desc_id
+        return self.Desc
     
     @property
     def votes(self):
@@ -166,7 +170,6 @@ class UserProfile(models.Model):
     is_admin = models.BooleanField(default=False)
     def __str__(self):
         return self.user.username
-
 
 class Inventorys(models.Model):
     product_name=models.CharField(max_length=100,null=True)

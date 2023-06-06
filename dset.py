@@ -65,9 +65,8 @@ DJOSER = {
     "SEND_ACTIVATION_EMAIL":True,
     "SERIALIZERS":{
         
-        # 'user_create':'app.serializers.UserCreateSerializer',
-        # 'user':'app.serializers.UserCreateSerializer',
-        'current_user':'app.serializers.UserCreateSerializer',
+        'user_create':'app.serializers.UserCreateSerializer',
+        'user':'app.serializers.UserCreateSerializer',
         'user_delete':'djoser.serializers.UserDeleteSerializer',
     }
 }
@@ -130,8 +129,8 @@ AUTHENTICATION_BACKENDS = [
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('Bearer',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'AUTH_HEADER_TYPES': ('JWT',),
 
 }
 # Password validation
@@ -187,4 +186,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'app.UserAccount'
 
 
-# AUTH_USER_MODEL="app.UserAccount"
+AUTH_USER_MODEL="app.UserAccount"

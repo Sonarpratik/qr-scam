@@ -22,5 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home_page),
     path("api/",include('api.urls')),
-    path("inventory/",include('app.urls'))
+    path("auth/",include('djoser.urls')),
+    path("auth/",include('djoser.urls.jwt')),
+    # path('auth/', include('djoser.urls.authtoken')),
+
+
+    # path("app/",include('app.urls'))
 ]
