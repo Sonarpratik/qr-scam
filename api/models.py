@@ -52,13 +52,13 @@ class Song(models.Model):
         return self.title
     
 class Client(models.Model):
-    name=models.CharField(max_length=100)
-    company_name=models.CharField(max_length=100)
+    name=models.CharField(max_length=100,blank=True,null=True)
+    company_name=models.CharField(max_length=100,blank=True,null=True)
     gst_no=models.CharField(max_length=100,blank=True,null=True)
-    email=models.CharField(max_length=100)	
-    phone=models.IntegerField()
-    shipping_address=models.CharField(max_length=100)
-    billing_address=models.CharField(max_length=100)
+    email=models.CharField(max_length=100,blank=True,null=True)	
+    phone=models.IntegerField(blank=True,null=True)
+    shipping_address=models.CharField(max_length=100,blank=True,null=True)
+    billing_address=models.CharField(max_length=100,blank=True,null=True)
 
 
 class Invoice(models.Model):
