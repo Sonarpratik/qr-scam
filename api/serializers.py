@@ -4,57 +4,11 @@ from api.models import *
 
 #create serializers here
 
-class CompanySerializer(serializers.HyperlinkedModelSerializer):
-    company_id=serializers.ReadOnlyField()
-    class Meta:
-        model=Company
-        fields="__all__"
 
-class StudentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Student
-        fields="__all__"
-
-# VALIDATOR
-    def validate(self,data):
-        if data['college']=="Sanjivani":
-            raise serializers.ValidationError({'error':"College cant be Sanjivani"})
-        
-        if data['name']:
-            for n in data['name']:
-                if n.isdigit():
-                    raise serializers.ValidationError({'error':'name cant be numeric'})
-
-
-        return data
-    
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Category
-        fields=["categoty_name"]
     
 
 
-class BookSerializer(serializers.ModelSerializer):
-    categorys=CategorySerializer()
-    class Meta:
-        model=Book
-        fields="__all__"
-        # depth = 1
 
-
-
-# class SongSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model=Song
-#         fields=['id','title','singer','duration']
-
-# class SingerSerializer(serializers.ModelSerializer):
-#     sungby = SongSerializer(many=True,read_only=False)
-#     class Meta:
-#         model=Singer
-#         fields=['id','name','gender','sungby']
 
 class UserSerializer(serializers.ModelSerializer):
     id=serializers.IntegerField(required=False)

@@ -8,9 +8,9 @@ from .models import *
 # admin.site.register(Category)
 # admin.site.register(Song)
 # admin.site.register(Singer)
-admin.site.site_header="Balaji Steel"
-admin.site.site_title="Balaji Steel"
-admin.site.index_title="Balaji Steel"
+admin.site.site_header="Mahajan Production"
+admin.site.site_title="Mahajan Production"
+admin.site.index_title="Mahajan Production"
 admin.site.register(Invoice)
 admin.site.register(User)
 @admin.register(Client)

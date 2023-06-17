@@ -7,55 +7,7 @@ from rest_framework.views import APIView
 
 from api.serializers import *
 # Create your views here.
-class ComapnyViewSet(viewsets.ModelViewSet):
-    queryset=Company.objects.all()
-    serializer_class=CompanySerializer
 
-
-
-
-@api_view(['GET'])
-def get_book(request):
-    book_objs=Book.objects.all()
-    serializers=BookSerializer(book_objs,many=True)
-    return Response({'status':200,'payload':serializers.data})
-
-
-class StudentAPI(APIView):
-
-    def get(self, request):
-        student_objs=Student.objects.all()
-        serializers=StudentSerializer(student_objs,many=True)
-        return Response({'status':200,'payload':serializers.data})
-
-    def post(self, request):
-       
-         serializers= StudentSerializer(data=request.data)
-     
-     
-         if not serializers.is_valid():
-             print(serializers.errors)
-             return Response({'status':403,'errors':serializers.errors, 'message ':'Something went wrong'})
-         serializers.save()
-         return Response({'status':200,'payload':request.data,'message':'you sent'})
-
-    def put(self, request):
-        pass
-    def patch(self, request):
-        pass
-    def delete(self, request):
-        pass
-
-
-# class SingerViewSet(viewsets.ModelViewSet):
-#     queryset=Singer.objects.all()
-#     serializer_class=SingerSerializer
-
-
-
-# class SongViewSet(viewsets.ModelViewSet):
-#     queryset=Song.objects.all()
-#     serializer_class=SongSerializer
 
 
 class InvoiceViewSet(viewsets.ModelViewSet):

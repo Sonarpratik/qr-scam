@@ -1,65 +1,80 @@
 from django.db import models
-
+# from django.contrib.auth.models import *
 # Create your models here.
 
-#Creating company model 
-class Company(models.Model):
-    company_id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=50)
-    location=models.CharField(max_length=50)
-    about=models.TextField()
-    type=models.CharField(max_length=100,choices=(('IT',"IT"),("NON IT","NON IT"),("MOBIES PHONEs","this is mobile")))
-    added_date=models.DateTimeField(auto_now=True)
-    active=models.BooleanField(default=True)
-
-
-#employee model
-
-
-class Category(models.Model):
-    categoty_name=models.CharField(max_length=50)
-    # quantity=models.CharField(max_length=50,default="100")
-
-
-class Book(models.Model):
-    categorys=models.ForeignKey(Category,on_delete=models.CASCADE)
-    book_title=models.CharField(max_length=100)
-
-    # @property
-    # def category(self):
-    #     return self.choice_set.all()
-
-class Student(models.Model):
-    id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=50)
-    college=models.CharField(max_length=50)
+#Creating company model
 
 
 
-class Singer (models.Model):
-    name=models.CharField(max_length=100)
-    gender=models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
-    
-class Song(models.Model):
-    title=models.CharField(max_length=100)
-    singer=models.ForeignKey(Singer,on_delete=models.CASCADE,related_name='sungby')
-    duration=models.IntegerField()
+# class Singer (models.Model):
+#     name=models.CharField(max_length=100)
+#     gender=models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.title
-    
+#     def __str__(self):
+#         return self.name
+
+# class Song(models.Model):
+#     title=models.CharField(max_length=100)
+#     singer=models.ForeignKey(Singer,on_delete=models.CASCADE,related_name='sungby')
+#     duration=models.IntegerField()
+
+#     def __str__(self):
+#         return self.title
+# class UserAccount(AbstractBaseUser):
+#     username = models.EmailField(max_length=255, unique=True)
+#     first_name = models.CharField(max_length=255)
+#     last_name = models.CharField(max_length=255)
+#     is_active = models.BooleanField(default=True)
+#     is_staff = models.BooleanField(default=False)
+
+#     def __str__(self):
+#         return self.username
+STATE_CHOICE = (
+    ("Andhra Pradesh", "Andhra Pradesh"),
+    ("Arunachal Pradesh", "Arunachal Pradesh"),
+    ("Assam", "Assam"),
+    ("Bihar", "Bihar"),
+    ("Chhattisgarh", "Chhattisgarh"),
+    ("Goa", "Goa"),
+    ("Gujarat", "Gujarat"),
+    ("Haryana", "Haryana"),
+    ("Himachal Pradesh", "Himachal Pradesh"),
+    ("Jharkhand", "Jharkhand"),
+    ("Karnataka", "Karnataka"),
+    ("Kerala", "Kerala"),
+    ("Madhya Pradesh", "Madhya Pradesh"),
+    ("Maharashtra", "Maharashtra"),
+    ("Manipur", "Manipur"),
+    ("Meghalaya", "Meghalaya"),
+    ("Mizoram", "Mizoram"),
+    ("Nagaland", "Nagaland"),
+    ("Odisha", "Odisha"),
+    ("Punjab", "Punjab"),
+    ("Rajasthan", "Rajasthan"),
+    ("Sikkim", "Sikkim"),
+    ("Tamil Nadu", "Tamil Nadu"),
+    ("Telangana", "Telangana"),
+    ("Tripura", "Tripura"),
+    ("Uttar Pradesh", "Uttar Pradesh"),
+    ("Uttarakhand", "Uttarakhand"),
+    ("West Bengal", "West Bengal"),
+    ("Jammu and Kashmir", "Jammu and Kashmir"),
+    ("Ladakh", "Ladakh"),
+)
+
+
+
 class Client(models.Model):
     name=models.CharField(max_length=100,blank=True,null=True)
     company_name=models.CharField(max_length=100,blank=True,null=True)
     gst_no=models.CharField(max_length=100,blank=True,null=True)
-    email=models.CharField(max_length=100,blank=True,null=True)	
-    phone=models.IntegerField(blank=True,null=True)
+    email=models.CharField(max_length=100,blank=True,null=True)
+    phone=models.CharField(max_length=100,blank=True,null=True)
     shipping_address=models.CharField(max_length=100,blank=True,null=True)
     billing_address=models.CharField(max_length=100,blank=True,null=True)
-
+    shipping_state=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
+    billing_state=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
 
 class Invoice(models.Model):
     name=models.CharField(max_length=100,blank=True,null=True)
@@ -99,10 +114,6 @@ class Invoice(models.Model):
     billing_email=models.CharField(max_length=200,blank=True,null=True)
     e_way_no=models.CharField(max_length=200,blank=True,null=True)
     freight=models.IntegerField(blank=True,null=True)
-    total=models.IntegerField(blank=True,null=True)
-    igst_total=models.IntegerField(blank=True,null=True)
-    sgst_total=models.IntegerField(blank=True,null=True)
-    cgst_total=models.IntegerField(blank=True,null=True)
 
 
 
@@ -111,7 +122,7 @@ class Invoice(models.Model):
     @property
     def user(self):
         return self.choice_set.all()
-    
+
 
 
 class User(models.Model):
@@ -120,7 +131,7 @@ class User(models.Model):
     product_id=models.IntegerField(null=True)
     quantity=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=3)
     sac=models.IntegerField(null=True)
-    rate=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=3)
+    rate=models.IntegerField(null=True)
 
     unit=models.CharField(max_length=100,null=True)
     cgst=models.IntegerField(null=True,blank=True)
@@ -130,10 +141,10 @@ class User(models.Model):
 
     invoice=models.ForeignKey(Invoice,on_delete=models.CASCADE,related_name='user')
 
-    
+
     def __str__(self):
         return self.Desc
-    
+
     @property
     def votes(self):
         return self.answer_set.count()
@@ -146,7 +157,7 @@ class User(models.Model):
 
 #     state=models.CharField(max_length=100)
 #     contact=models.CharField(max_length=100)
-    
+
 #     def __str__(self):
 #         return self.pan
 
@@ -159,17 +170,19 @@ class User(models.Model):
 # #    def __str__(self):
 # #        return self.desc_id
 
-class UserProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_designer = models.BooleanField(default=False)
-    is_secendory_process = models.BooleanField(default=False)
-    is_embroidary = models.BooleanField(default=False)
-    is_cutting = models.BooleanField(default=False)
-    is_production = models.BooleanField(default=False)
-    is_accountent = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    def __str__(self):
-        return self.user.username
+# class UserProfile(models.Model):
+#     username = models.CharField(max_length=255,blank=True)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     is_designer = models.BooleanField(default=False)
+#     is_secendory_process = models.BooleanField(default=False)
+#     is_embroidary = models.BooleanField(default=False)
+#     is_cutting = models.BooleanField(default=False)
+#     is_production = models.BooleanField(default=False)
+#     is_accountent = models.BooleanField(default=False)
+#     is_admin = models.BooleanField(default=False)
+#     def __str__(self):
+#         return self.user.username
+
 
 class Inventorys(models.Model):
     product_name=models.CharField(max_length=100,null=True)
@@ -181,4 +194,3 @@ class Inventorys(models.Model):
 
     # def __str__(self):
     #     return self.sac
-     

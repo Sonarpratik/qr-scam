@@ -27,5 +27,5 @@ urlpatterns = [
     # path('auth/', include('djoser.urls.authtoken')),
 
 
-    # path("app/",include('app.urls'))
+    path("app/",include('app.urls'))
 ]
