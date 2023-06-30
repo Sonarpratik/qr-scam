@@ -30,6 +30,14 @@ ALLOWED_HOSTS = []
 import os
 # Application definition
 
+
+
+
+
+
+
+
+
 INSTALLED_APPS = [
     # 'django.contrib.auth',
     'django.contrib.admin',
@@ -52,29 +60,21 @@ CORS_ALLOWED_ORIGINS = [
 CORES_ORIGIN_WHITELIST = [
     "http://127.0.0.1:5173"
 ]
-DJOSER = {
-    "LOGIN_FIELD":'username',
-    "USER_CREATE_PASSWORD_RETYPE":True,
-    "USERNAME_CHANGED_EMAIL_CONFIRMATION":True,
-    "PASSWORD_CHANGED_EMAIL_CONFIRMATION":True,
-    "SEND_CONFIRMATION_EMAIL":True,
-    "SET_USERNAME_RETYPE":True,
-    "SET_PASSWORD_RETYPE":True,
-    "PASSWORD_RESET_CONFIRM_URL":"password/reset/confirm/{uid}/{token}",
-    "USERNAME_RESET_CONFIRM_URL":"username/reset/confirm/{uid}/{token}",
-    "ACTIVATION_URL":"activate/{uid}/{token}",
+# from django.core.mail import send_mail
+
+# send_mail(
+#     'Test Email',
+#     '{uid}{token}',
+#     'x2.prateeksonar2002@gmail.com',
+#     ['xprateek.2002@gmail.com'],
+#     fail_silently=False,
+# )
 
 
-    
-    "SEND_ACTIVATION_EMAIL":True,
-    "SERIALIZERS":{
-        
-        # 'user_create':'app.serializers.UserCreateSerializer',
-        # 'user':'app.serializers.UserCreateSerializer',
-        'current_user':'app.serializers.UserCreateSerializer',
-        'user_delete':'djoser.serializers.UserDeleteSerializer',
-    }
-}
+
+
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,7 +92,7 @@ ROOT_URLCONF = 'comp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,6 +118,14 @@ DATABASES = {
     }
 }
 
+# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='x2.prateeksonar2002@gmail.com'
+EMAIL_HOST_PASSWORD='zhkaiodrfmtiegyi'
+EMAIL_USE_TLS=True
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.TokenAuthentication',
@@ -126,6 +134,37 @@ REST_FRAMEWORK = {
     ),
 }
 
+DJOSER = {
+    "LOGIN_FIELD":'username',
+    "USER_CREATE_PASSWORD_RETYPE":True,
+    "USERNAME_CHANGED_EMAIL_CONFIRMATION":True,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION":True,
+    "SEND_CONFIRMATION_EMAIL":True,
+    "SET_USERNAME_RETYPE":True,
+    "SET_PASSWORD_RETYPE":True,
+    "PASSWORD_RESET_CONFIRM_URL":"password/reset/confirm/{uid}/{token}",
+    "USERNAME_RESET_CONFIRM_URL":"username/reset/confirm/{uid}/{token}",
+    "ACTIVATION_URL":"activate/{uid}/{token}",
+    'SEND_ACTIVATION_EMAIL': True,
+    "PASSWORD_RESET_CONFIRM_RETYPE":True,
+    "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND":True,
+
+    
+    "SERIALIZERS":{
+        
+        # 'user_create':'app.serializers.UserCreateSerializer',
+        # 'user':'app.serializers.UserCreateSerializer',
+        # 'password_reset': 'djoser.email.PasswordResetEmail',
+        'current_user':'app.serializers.UserCreateSerializer',
+        'user_delete':'djoser.serializers.UserDeleteSerializer',
+        'password_reset': 'app.serializers.SendEmailResetSerializer',
+        'password_reset_confirm': 'app.serializers.CustomSendEmailResetSerializer',
+    },
+    'EMAIL': {
+        # 'password_reset': 'djoser.email.PasswordResetEmail'
+        # 'password_reset': 'app.email.CustomPasswordResetView'
+    }
+}
 
 
 AUTHENTICATION_BACKENDS = [
@@ -156,13 +195,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 # rpmkprzjjcmrleja
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_HOST_USER='xprateek.2002@gmail.com'
-EMAIL_HOST_PASSWORD='rpmkprzjjcmrleja'
-EMAIL_USE_TLS=True
 
+# zhkaiodrfmtiegyi
+# EMAIL_HOST_USER='x2.prateeksonar2002@gmail.com'
+# EMAIL_HOST_PASSWORD='zhkaiodrfmtiegyi'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -180,12 +216,21 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS=[
-    # os.path.join(BASE_DIR,'build/static')
+    os.path.join(BASE_DIR,'build/static')
 ]
-# STATIC_URL_ROOT=os.path.join(BASE_DIR,'static')
+STATIC_URL_ROOT=os.path.join(BASE_DIR,'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+
+
+
+
+
+
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'app.UserAccount'

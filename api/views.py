@@ -19,7 +19,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         
         # Save the data and return the serialized representation
-        print(serializer)
+        # print(serializer)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -30,6 +30,27 @@ class InvoiceViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset=User.objects.all()
     serializer_class=UserSerializer
+
+class ProformInvoiceViewSet(viewsets.ModelViewSet):
+    queryset=ProformInvoice.objects.all()
+    serializer_class=ProformInvoiceSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        # Save the data and return the serialized representation
+        # print(serializer)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+    
+
+
+class ProformUserViewSet(viewsets.ModelViewSet):
+    queryset=ProformUser.objects.all()
+    serializer_class=ProformUserSerializer
 
 
 class ClientViewSet(viewsets.ModelViewSet):

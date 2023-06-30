@@ -1,6 +1,6 @@
 from rest_framework import serializers
 # from app.models import *
-from djoser.serializers import UserCreateSerializer
+from djoser.serializers import UserCreateSerializer,SendEmailResetSerializer
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -37,3 +37,33 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+    
+
+
+
+
+class CustomSendEmailResetSerializer(SendEmailResetSerializer):
+    print("panner")
+    print(SendEmailResetSerializer)
+
+    def save(self):
+        # Custom logic for saving the reset email
+        # You can modify this method according to your requirements
+        print("panneer")
+
+        user = self.user
+        print("dfsbdfhsbdsdbsdjfhb")
+        print(user)
+        user.send_reset_password_email()  # Custom method to send the reset email
+
+    def get_email_options(self):
+        # Custom logic for getting email options
+        # You can modify this method according to your requirements
+        email_options = super().get_email_options()
+        # Modify email options here if needed
+        print("panneer")
+
+        return email_options
+    def post(self):
+   
+        return print("alpha")

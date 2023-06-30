@@ -9,3 +9,4 @@ def home_page(request):
     ]
     # return HttpResponse("This is home page")
     return JsonResponse(friends,safe=False)
+

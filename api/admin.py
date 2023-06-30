@@ -8,11 +8,12 @@ from .models import *
 # admin.site.register(Category)
 # admin.site.register(Song)
 # admin.site.register(Singer)
-admin.site.site_header="Mahajan Production"
-admin.site.site_title="Mahajan Production"
-admin.site.index_title="Mahajan Production"
+admin.site.site_header="Abundance System"
+admin.site.site_title="Abundance System"
+admin.site.index_title="Abundance System"
 admin.site.register(Invoice)
-admin.site.register(User)
+admin.site.register(ProformInvoice)
+# admin.site.register(User)
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
  list_display=['id','name','company_name']
