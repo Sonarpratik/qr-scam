@@ -9,11 +9,8 @@ router=routers.DefaultRouter()
 # 
 # router.register('singer',views.SingerViewSet,basename='singer')
 # router.register('song',views.SongViewSet,basename='song')
-router.register('invoice',views.InvoiceViewSet,basename='invoice')
-router.register('user',views.UserViewSet,basename='user')
-
-router.register('proforminvoice',views.ProformInvoiceViewSet,basename='proforminvoice')
-router.register('proformuser',views.ProformUserViewSet,basename='proformuser')
+router.register('quotation',views.QuotationViewSet,basename='quotation')
+router.register('item',views.ItemViewSet,basename='item')
 
 router.register('client',views.ClientViewSet,basename='client')
 # router.register('shipping',views.ShippingViewSet,basename='shipping')

@@ -31,196 +31,81 @@ from django.db import models
 #     def __str__(self):
 #         return self.username
 STATE_CHOICE = (
-    ("Andhra Pradesh", "Andhra Pradesh"),
-    ("Arunachal Pradesh", "Arunachal Pradesh"),
-    ("Assam", "Assam"),
-    ("Bihar", "Bihar"),
-    ("Chhattisgarh", "Chhattisgarh"),
-    ("Goa", "Goa"),
-    ("Gujarat", "Gujarat"),
-    ("Haryana", "Haryana"),
-    ("Himachal Pradesh", "Himachal Pradesh"),
-    ("Jharkhand", "Jharkhand"),
-    ("Karnataka", "Karnataka"),
-    ("Kerala", "Kerala"),
-    ("Madhya Pradesh", "Madhya Pradesh"),
-    ("Maharashtra", "Maharashtra"),
-    ("Manipur", "Manipur"),
-    ("Meghalaya", "Meghalaya"),
-    ("Mizoram", "Mizoram"),
-    ("Nagaland", "Nagaland"),
-    ("Odisha", "Odisha"),
-    ("Punjab", "Punjab"),
-    ("Rajasthan", "Rajasthan"),
-    ("Sikkim", "Sikkim"),
-    ("Tamil Nadu", "Tamil Nadu"),
-    ("Telangana", "Telangana"),
-    ("Tripura", "Tripura"),
-    ("Uttar Pradesh", "Uttar Pradesh"),
-    ("Uttarakhand", "Uttarakhand"),
-    ("West Bengal", "West Bengal"),
-    ("Jammu and Kashmir", "Jammu and Kashmir"),
-    ("Ladakh", "Ladakh"),
+    ("AS PER DESIGN", "AS PER DESIGN"),
+    ("LENGTH HEIGHT", "LENGTH HEIGHT"),
+   
 )
 
 
 
 class Client(models.Model):
-    name=models.CharField(max_length=100,blank=True,null=True)
+    contact_person_name=models.CharField(max_length=100,blank=True,null=True)
+    allocate_name=models.CharField(max_length=100,blank=True,null=True)
     company_name=models.CharField(max_length=100,blank=True,null=True)
-    gst_no=models.CharField(max_length=100,blank=True,null=True)
     email=models.CharField(max_length=100,blank=True,null=True)
     phone=models.CharField(max_length=100,blank=True,null=True)
-    shipping_address=models.CharField(max_length=100,blank=True,null=True)
-    billing_address=models.CharField(max_length=100,blank=True,null=True)
-    shipping_state=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
-    billing_state=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
+    site_address=models.CharField(max_length=100,blank=True,null=True)
 
-class Invoice(models.Model):
-    name=models.CharField(max_length=100,blank=True,null=True)
-    client_id=models.CharField(max_length=100,blank=True,null=True)
-    invoice_no=models.CharField(max_length=100,blank=True,null=True)
-    bill_of_lading=models.CharField(max_length=100,blank=True,null=True)
-    billing_address=models.CharField(max_length=100,blank=True,null=True)
-    billing_contact=models.CharField(max_length=100,blank=True,null=True)
-    billing_gstin=models.CharField(max_length=100,blank=True,null=True)
-    billing_pan=models.CharField(max_length=100,blank=True,null=True)
-    billing_state=models.CharField(max_length=100,blank=True,null=True)
-    brokername=models.CharField(max_length=100,blank=True,null=True)
-    buyers_order_no=models.CharField(max_length=100,blank=True,null=True)
-    dated=models.CharField(blank=True,null=True,max_length=100)
-    dated2=models.CharField(blank=True,null=True,max_length=100)
-    delivery_date=models.CharField(blank=True,null=True,max_length=100)
-    destination=models.CharField(max_length=100,blank=True,null=True)
-    dispatch_doc_no=models.CharField(max_length=100,blank=True,null=True)
-    dispatch_through=models.CharField(max_length=100,blank=True,null=True)
-    motor_v_no=models.CharField(max_length=100,blank=True,null=True)
-    other_ref=models.CharField(max_length=100,blank=True,null=True)
-    other_ref=models.CharField(max_length=100,blank=True,null=True)
-    shipping_address=models.CharField(max_length=100,blank=True,null=True)
-    shipping_contact=models.CharField(max_length=100,blank=True,null=True)
-    shipping_gstin=models.CharField(max_length=100,blank=True,null=True)
-    shipping_pan=models.CharField(max_length=100,blank=True,null=True)
-    shipping_state=models.CharField(max_length=100,blank=True,null=True)
-    shipping_company_name=models.CharField(max_length=100,blank=True,null=True)
-    billing_company_name=models.CharField(max_length=100,blank=True,null=True)
-    inr_no=models.CharField(max_length=100,blank=True,null=True)
-    ack_no=models.CharField(max_length=100,blank=True,null=True)
-    ack_date=models.CharField(max_length=100,blank=True,null=True)
-    delivery_note=models.CharField(max_length=100,blank=True,null=True)
-    terms_of_payment=models.CharField(max_length=100,blank=True,null=True)
-    terms_of_delivery=models.CharField(max_length=200,blank=True,null=True)
-    shipping_email=models.CharField(max_length=200,blank=True,null=True)
-    billing_email=models.CharField(max_length=200,blank=True,null=True)
-    e_way_no=models.CharField(max_length=200,blank=True,null=True)
-    freight=models.IntegerField(blank=True,null=True)
+class Quotation(models.Model):
+    quotation_number=models.CharField(max_length=100,blank=True,null=True)
+    client_name=models.CharField(max_length=100,blank=True,null=True)
+    client_address=models.CharField(max_length=100,blank=True,null=True)
+    client_contact=models.CharField(max_length=100,blank=True,null=True)
 
+    terms=models.CharField(max_length=100,blank=True,null=True)
 
-
-    def __str__(self):
-        return self.invoice_no
-    @property
-    def user(self):
-        return self.choice_set.all()
-
-
-
-class User(models.Model):
-    desc_id=models.IntegerField(null=True)
-    Desc=models.CharField(max_length=100,null=True)
-    product_id=models.IntegerField(null=True)
-    quantity=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=3)
-    sac=models.IntegerField(null=True)
-    rate=models.IntegerField(null=True)
-
-    unit=models.CharField(max_length=100,null=True)
-    cgst=models.IntegerField(null=True,blank=True)
-    igst=models.IntegerField(null=True,blank=True)
-    sgst=models.IntegerField(null=True,blank=True)
-    gst_type=models.CharField(max_length=100,null=True)
-
-    invoice=models.ForeignKey(Invoice,on_delete=models.CASCADE,related_name='user')
-
-
-    def __str__(self):
-        return self.Desc
-
-    @property
-    def votes(self):
-        return self.answer_set.count()
+    total=models.CharField(max_length=100,blank=True,null=True)
     
-class ProformInvoice(models.Model):
-    name=models.CharField(max_length=100,blank=True,null=True)
-    client_id=models.CharField(max_length=100,blank=True,null=True)
-    invoice_no=models.CharField(max_length=100,blank=True,null=True)
-    bill_of_lading=models.CharField(max_length=100,blank=True,null=True)
-    billing_address=models.CharField(max_length=100,blank=True,null=True)
-    billing_contact=models.CharField(max_length=100,blank=True,null=True)
-    billing_gstin=models.CharField(max_length=100,blank=True,null=True)
-    billing_pan=models.CharField(max_length=100,blank=True,null=True)
-    billing_state=models.CharField(max_length=100,blank=True,null=True)
-    brokername=models.CharField(max_length=100,blank=True,null=True)
-    buyers_order_no=models.CharField(max_length=100,blank=True,null=True)
-    dated=models.CharField(blank=True,null=True,max_length=100)
-    dated2=models.CharField(blank=True,null=True,max_length=100)
-    delivery_date=models.CharField(blank=True,null=True,max_length=100)
-    destination=models.CharField(max_length=100,blank=True,null=True)
-    dispatch_doc_no=models.CharField(max_length=100,blank=True,null=True)
-    dispatch_through=models.CharField(max_length=100,blank=True,null=True)
-    motor_v_no=models.CharField(max_length=100,blank=True,null=True)
-    other_ref=models.CharField(max_length=100,blank=True,null=True)
-    other_ref=models.CharField(max_length=100,blank=True,null=True)
-    shipping_address=models.CharField(max_length=100,blank=True,null=True)
-    shipping_contact=models.CharField(max_length=100,blank=True,null=True)
-    shipping_gstin=models.CharField(max_length=100,blank=True,null=True)
-    shipping_pan=models.CharField(max_length=100,blank=True,null=True)
-    shipping_state=models.CharField(max_length=100,blank=True,null=True)
-    shipping_company_name=models.CharField(max_length=100,blank=True,null=True)
-    billing_company_name=models.CharField(max_length=100,blank=True,null=True)
-    inr_no=models.CharField(max_length=100,blank=True,null=True)
-    ack_no=models.CharField(max_length=100,blank=True,null=True)
-    ack_date=models.CharField(max_length=100,blank=True,null=True)
-    delivery_note=models.CharField(max_length=100,blank=True,null=True)
-    terms_of_payment=models.CharField(max_length=100,blank=True,null=True)
-    terms_of_delivery=models.CharField(max_length=200,blank=True,null=True)
-    shipping_email=models.CharField(max_length=200,blank=True,null=True)
-    billing_email=models.CharField(max_length=200,blank=True,null=True)
-    e_way_no=models.CharField(max_length=200,blank=True,null=True)
-    freight=models.IntegerField(blank=True,null=True)
-
 
 
     def __str__(self):
-        return self.invoice_no
+        return self.quotation_number
     @property
-    def user(self):
+    def item(self):
         return self.choice_set.all()
 
 
 
-class ProformUser(models.Model):
-    desc_id=models.IntegerField(null=True)
-    Desc=models.CharField(max_length=100,null=True)
-    product_id=models.IntegerField(null=True)
-    quantity=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=3)
-    sac=models.IntegerField(null=True)
-    rate=models.IntegerField(null=True)
+class Item(models.Model):
+    item_name=models.CharField(max_length=100,null=True,blank=True)
+    item_category=models.CharField(max_length=100,null=True,blank=True)
+    size=models.CharField(max_length=100,blank=True,null=True)
 
-    unit=models.CharField(max_length=100,null=True)
-    cgst=models.IntegerField(null=True,blank=True)
-    igst=models.IntegerField(null=True,blank=True)
-    sgst=models.IntegerField(null=True,blank=True)
-    gst_type=models.CharField(max_length=100,null=True)
+    height=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    length=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    
 
-    invoice=models.ForeignKey(ProformInvoice,on_delete=models.CASCADE,related_name='user')
+    quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='item')
 
 
     def __str__(self):
-        return self.Desc
+        return self.item_name
 
     @property
     def votes(self):
         return self.answer_set.count()
+
+
+class Items(models.Model):
+    item_name=models.CharField(max_length=100,null=True,blank=True)
+    item_category=models.CharField(max_length=100,null=True,blank=True)
+    size=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
+
+    costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+ 
+    def __str__(self):
+        return self.item_name
+
+
+
+
+
+
+
+
+
+
+
 
 # class Shipping(models.Model):
 #     address=models.CharField(max_length=100)

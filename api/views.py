@@ -10,9 +10,9 @@ from api.serializers import *
 
 
 
-class InvoiceViewSet(viewsets.ModelViewSet):
-    queryset=Invoice.objects.all()
-    serializer_class=InvoiceSerializer
+class QuotationViewSet(viewsets.ModelViewSet):
+    queryset=Quotation.objects.all()
+    serializer_class=QuotationSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -27,31 +27,9 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset=User.objects.all()
-    serializer_class=UserSerializer
-
-class ProformInvoiceViewSet(viewsets.ModelViewSet):
-    queryset=ProformInvoice.objects.all()
-    serializer_class=ProformInvoiceSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        
-        # Save the data and return the serialized representation
-        # print(serializer)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    
-    
-
-
-class ProformUserViewSet(viewsets.ModelViewSet):
-    queryset=ProformUser.objects.all()
-    serializer_class=ProformUserSerializer
-
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset=Item.objects.all()
+    serializer_class=ItemSerializer
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset=Client.objects.all()
@@ -69,142 +47,3 @@ class InventoysViewSet(viewsets.ModelViewSet):
 
 
 
-
-
-
-
-
-
-@api_view(['GET'])
-def userinfo(request):
-    user = request.user
-    if user.is_authenticated:
-        profile = UserProfile.objects.get(user=user)
-        if profile.is_designer == True:
-            data = {
-                "user":user.username,
-                "email":user.email,
-                "roll":"designer"
-                }
-            return Response(data)
-        elif profile.is_cutting == True:
-            data = {
-                "user":user.username,
-                "email":user.email,
-                "roll":"cutting"
-                }
-            return Response(data)
-        elif profile.is_production == True:
-            data = {
-                "user":user.username,
-                "email":user.email,
-                "roll":"production"
-                }
-            return Response(data)
-        elif profile.is_secendory_process == True:
-            data = {
-                "user":user.username,
-                "email":user.email,
-                "roll":"secendory_process"
-                }
-            return Response(data)
-        elif profile.is_embroidary == True:
-            data = {
-                "user":user.username,
-                "email":user.email,
-                "roll":"embroidary"
-                }
-            return Response(data)
-        elif profile.is_accountent == True:
-            data = {
-                "user":user.username,
-                "email":user.email,
-                "roll":"accountent"
-                }
-            return Response(data)
-        elif profile.is_admin == True:
-            data = {
-                "user":user.username,
-                "email":user.email,
-                "roll":"admin"
-                }
-            return Response(data)
-        else:
-            data = {
-                "message":"you are not valid user"
-                }
-            return Response(data)
-    else:
-        return Response({"message":"login first"})
-# class AViewSet(viewsets.ModelViewSet):
-#     queryset = Invoice.objects.all()
-#     serializer_class = ASerializer
-
-
-# class ShippingViewSet(viewsets.ModelViewSet):
-#     queryset=Shipping.objects.all()
-#     serializer_class=ShippingSerializer
-
-
-
-
-
-# @api_view(['GET'])
-# def get_cat(request):
-#     book_objs=Category.objects.all()
-#     serializers=CategorySerializer(book_objs,many=True)
-#     return Response({'status':200,'payload':serializers.data})
-
-
-# @api_view(['GET'])
-# def home(request):
-#     student_objs=Student.objects.all()
-#     serializers=StudentSerializer(student_objs,many=True)
-
-#     return Response({'status':200,'payload':serializers.data})
-
-
-# @api_view(['POST'])
-# def post_student(request):
-#     data=request.data
-#     print(data)
-#     serializers= StudentSerializer(data=request.data)
-
-
-#     if not serializers.is_valid():
-#         print(serializers.errors)
-#         return Response({'status':403,'errors':serializers.errors, 'message ':'Something went wrong'})
-#     serializers.save()
-#     return Response({'status':200,'payload':data,'message':'you sent'})
-
-
-
-# @api_view(['PUT'])
-# def update_student(request,id):
-    
-#     try:
-#         student_obj = Student.objects.get(id=id)
-    
-#         # serializers= StudentSerializer(student_obj, data=request.data) put req needs all data
-#         serializers= StudentSerializer(student_obj, data=request.data ,partial=True)
-    
-    
-#         if not serializers.is_valid():
-#             print(serializers.errors)
-#             return Response({'status':403,'errors':serializers.errors, 'message ':'Something went wrong'})
-#         serializers.save()
-#         return Response({'status':200,'payload':serializers.data,'message':'your data is updated'})
-#     except Exception as e:
-#         return Response({'status':405,'message':"INVALID ID"})
-
-# @api_view(['DELETE'])
-# def delete_student(request,id):
-#     try:
-        
-#         # print(request.GET.get)
-#         student_obj=Student.objects.get(id=id)
-#         student_obj.delete()
-#         return Response({'status':201,'message':'DELETED SUCCESSFULLY'})
-    
-#     except Exception as e:
-#         return Response({'status':403,'message':"inVALID ID"})
