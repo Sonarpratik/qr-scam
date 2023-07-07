@@ -35,6 +35,12 @@ STATE_CHOICE = (
     ("LENGTH HEIGHT", "LENGTH HEIGHT"),
    
 )
+UNIT = (
+    ("METER", "METER"),
+    ("CENTI METER", "CENTI METER"),
+    ("INCH", "INCH"),
+   
+)
 
 
 
@@ -48,6 +54,9 @@ class Client(models.Model):
 
 class Quotation(models.Model):
     quotation_number=models.CharField(max_length=100,blank=True,null=True)
+
+    user_client=models.CharField(max_length=100,blank=True,null=True)
+    client_id=models.CharField(max_length=100,blank=True,null=True)
     client_name=models.CharField(max_length=100,blank=True,null=True)
     client_address=models.CharField(max_length=100,blank=True,null=True)
     client_contact=models.CharField(max_length=100,blank=True,null=True)
@@ -90,6 +99,7 @@ class Items(models.Model):
     item_name=models.CharField(max_length=100,null=True,blank=True)
     item_category=models.CharField(max_length=100,null=True,blank=True)
     size=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
+    unit=models.CharField(max_length=100,blank=True,null=True,choices=UNIT)
 
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
  
@@ -152,3 +162,7 @@ class Inventorys(models.Model):
 
     # def __str__(self):
     #     return self.sac
+
+
+
+# unit pageination client id
