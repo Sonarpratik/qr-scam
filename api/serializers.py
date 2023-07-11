@@ -16,6 +16,11 @@ class ItemSerializer(serializers.ModelSerializer):
         model=Item
         fields="__all__"
         read_only_fields=('quotation',)
+
+class ItemsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Items
+        fields="__all__"
         
 
 class QuotationSerializer(serializers.ModelSerializer):

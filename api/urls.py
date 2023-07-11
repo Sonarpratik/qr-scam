@@ -11,6 +11,7 @@ router=routers.DefaultRouter()
 # router.register('song',views.SongViewSet,basename='song')
 router.register('quotation',views.QuotationViewSet,basename='quotation')
 router.register('item',views.ItemViewSet,basename='item')
+router.register('items',views.ItemsViewSet,basename='items')
 
 router.register('client',views.ClientViewSet,basename='client')
 # router.register('shipping',views.ShippingViewSet,basename='shipping')
