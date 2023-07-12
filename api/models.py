@@ -38,7 +38,9 @@ STATE_CHOICE = (
 UNIT = (
     ("METER", "METER"),
     ("CENTI METER", "CENTI METER"),
+    ("MILI METER", "MILI METER"),
     ("INCH", "INCH"),
+    ("FOOT", "FOOT"),
    
 )
 
@@ -46,7 +48,8 @@ UNIT = (
 
 class Client(models.Model):
     contact_person_name=models.CharField(max_length=100,blank=True,null=True)
-    user_client_id=models.CharField(max_length=100,blank=True,null=True)
+    # the person who made it
+    user_client_id=models.IntegerField(blank=True,null=True)
     user_client_name=models.CharField(max_length=100,blank=True,null=True)
 
     allocate_name=models.CharField(max_length=100,blank=True,null=True)
@@ -56,16 +59,15 @@ class Client(models.Model):
     site_address=models.CharField(max_length=100,blank=True,null=True)
 
 class Quotation(models.Model):
-    quotation_number=models.CharField(max_length=100,blank=True,null=True)
+    quotation_number=models.CharField(max_length=100,blank=True,null=True,default="20")
 
     user_client=models.CharField(max_length=100,blank=True,null=True)
-
+    user_client_id=models.IntegerField(blank=True,null=True)
     client_id=models.CharField(max_length=100,blank=True,null=True)
     client_name=models.CharField(max_length=100,blank=True,null=True)
     client_address=models.CharField(max_length=100,blank=True,null=True)
     client_contact=models.CharField(max_length=100,blank=True,null=True)
 
-    terms=models.CharField(max_length=100,blank=True,null=True)
 
     total=models.CharField(max_length=100,blank=True,null=True)
     
@@ -78,15 +80,20 @@ class Quotation(models.Model):
         return self.choice_set.all()
 
 
+# inside quotation
 
 class Item(models.Model):
     item_name=models.CharField(max_length=100,null=True,blank=True)
     item_category=models.CharField(max_length=100,null=True,blank=True)
     size=models.CharField(max_length=100,blank=True,null=True)
+    unit=models.CharField(max_length=100,blank=True,null=True)
 
     height=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     length=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
-    
+
+    item_id=models.IntegerField(null=True,blank=True)
+    costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    total=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
     quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='item')
 
@@ -98,10 +105,9 @@ class Item(models.Model):
     def votes(self):
         return self.answer_set.count()
 
-
+# independent
 class Items(models.Model):
     item_name=models.CharField(max_length=100,null=True,blank=True)
-    item_id=models.CharField(max_length=100,null=True,blank=True)
     item_category=models.CharField(max_length=100,null=True,blank=True)
     size=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
     unit=models.CharField(max_length=100,blank=True,null=True,choices=UNIT)
@@ -118,6 +124,16 @@ class Inventorys(models.Model):
     rate=models.IntegerField(null=True)
     total_quantity=models.IntegerField(null=True,blank=True)
     unit=models.CharField(max_length=100,null=True)
+
+class Terms(models.Model):
+    customer_terms=models.CharField(max_length=100,null=True)
+    quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='terms')
+
+
+    def __str__(self):
+        return self.terms
+
+ 
 
 
 # unit pageination client id

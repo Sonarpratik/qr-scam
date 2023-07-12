@@ -27,11 +27,12 @@ class QuotationViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
     
-
+from django.db.models import Q
 
 class ItemViewSet(viewsets.ModelViewSet):
     queryset=Item.objects.all()
     serializer_class=ItemSerializer
+
 
 class ItemsViewSet(viewsets.ModelViewSet):
     queryset=Items.objects.all()
@@ -43,9 +44,17 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset=Client.objects.all()
     serializer_class=ClientSerializer
     filter_backends=[SearchFilter]
-    search_fields=['contact_person_name']
+    search_fields=['contact_person_name','user_client_id']
 
+   
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user_client_id = self.request.query_params.get('user_client_id')
 
+        if user_client_id:
+            queryset = queryset.filter(user_client_id=user_client_id)
+
+        return queryset
 
 class InventoysViewSet(viewsets.ModelViewSet):
     queryset=Inventorys.objects.all()
