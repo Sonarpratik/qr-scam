@@ -36,11 +36,11 @@ STATE_CHOICE = (
    
 )
 UNIT = (
-    ("METER", "METER"),
-    ("CENTI METER", "CENTI METER"),
-    ("MILI METER", "MILI METER"),
-    ("INCH", "INCH"),
-    ("FOOT", "FOOT"),
+    ("SQR METER", "SQR METER"),
+    ("SQR CENTI METER", "SQR CENTI METER"),
+    ("SQR MILI METER", "SQR MILI METER"),
+    ("SQR INCH", "SQR INCH"),
+    ("SQR FOOT", "SQR FOOT"),
    
 )
 
@@ -67,6 +67,8 @@ class Quotation(models.Model):
     client_name=models.CharField(max_length=100,blank=True,null=True)
     client_address=models.CharField(max_length=100,blank=True,null=True)
     client_contact=models.CharField(max_length=100,blank=True,null=True)
+    special_note=models.CharField(max_length=100,blank=True,null=True)
+    discount=models.IntegerField(null=True,blank=True)
 
 
     total=models.CharField(max_length=100,blank=True,null=True)
@@ -109,8 +111,12 @@ class Item(models.Model):
 class Items(models.Model):
     item_name=models.CharField(max_length=100,null=True,blank=True)
     item_category=models.CharField(max_length=100,null=True,blank=True)
-    size=models.CharField(max_length=100,blank=True,null=True,choices=STATE_CHOICE)
     unit=models.CharField(max_length=100,blank=True,null=True,choices=UNIT)
+
+    height=models.IntegerField(null=True,blank=True)
+    width=models.IntegerField(null=True,blank=True)
+    length=models.IntegerField(null=True,blank=True)
+    depth=models.IntegerField(null=True,blank=True)
 
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
  
@@ -124,16 +130,5 @@ class Inventorys(models.Model):
     rate=models.IntegerField(null=True)
     total_quantity=models.IntegerField(null=True,blank=True)
     unit=models.CharField(max_length=100,null=True)
-
-class Terms(models.Model):
-    customer_terms=models.CharField(max_length=100,null=True)
-    quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='terms')
-
-
-    def __str__(self):
-        return self.terms
-
- 
-
 
 # unit pageination client id

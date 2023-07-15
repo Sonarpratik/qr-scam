@@ -17,12 +17,7 @@ class ItemSerializer(serializers.ModelSerializer):
         fields="__all__"
         read_only_fields=('quotation',)
 
-class TermsSerializers(serializers.ModelSerializer):
-    id=serializers.IntegerField(required=False)
-    class Meta:
-        model=Terms
-        fields="__all__"
-        read_only_fields=('quotation',)
+
 
 class ItemsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,7 +27,6 @@ class ItemsSerializer(serializers.ModelSerializer):
 
 class QuotationSerializer(serializers.ModelSerializer):
     item = ItemSerializer(many=True,read_only=False)
-    terms = TermsSerializers(many=True,read_only=False)
 
 
     class Meta:
@@ -43,13 +37,11 @@ class QuotationSerializer(serializers.ModelSerializer):
 
     def create(self,validated_data):
         item=validated_data.pop('item')
-        terms=validated_data.pop('terms')
         quotation=Quotation.objects.create(**validated_data)
 
         for choice in item:
             Item.objects.create(**choice,quotation=quotation)
-        for choice in terms:
-            Terms.objects.create(**choice,quotation=quotation)
+  
         return quotation
     
 
