@@ -37,10 +37,12 @@ STATE_CHOICE = (
 )
 UNIT = (
     ("SQR METER", "SQR METER"),
-    ("SQR CENTI METER", "SQR CENTI METER"),
-    ("SQR MILI METER", "SQR MILI METER"),
-    ("SQR INCH", "SQR INCH"),
+    ("MILI METER", "MILI METER"),
+    ("INCH", "INCH"),
     ("SQR FOOT", "SQR FOOT"),
+    ("RUNNING FOOT", "RUNNING FOOT"),
+    ("NUMBERS", "NUMBERS"),
+    
    
 )
 
@@ -69,9 +71,9 @@ class Quotation(models.Model):
     client_contact=models.CharField(max_length=100,blank=True,null=True)
     special_note=models.CharField(max_length=100,blank=True,null=True)
     discount=models.IntegerField(null=True,blank=True)
+    total_with_discount=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
 
-    total=models.CharField(max_length=100,blank=True,null=True)
     
 
 
@@ -97,6 +99,10 @@ class Item(models.Model):
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     total=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
+
+    numbers=models.IntegerField(null=True,blank=True)
+    running_foot=models.IntegerField(null=True,blank=True)
+
     quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='item')
 
 
@@ -117,6 +123,9 @@ class Items(models.Model):
     width=models.IntegerField(null=True,blank=True)
     length=models.IntegerField(null=True,blank=True)
     depth=models.IntegerField(null=True,blank=True)
+    
+    numbers=models.IntegerField(null=True,blank=True)
+    running_foot=models.IntegerField(null=True,blank=True)
 
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
  
