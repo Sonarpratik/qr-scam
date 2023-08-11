@@ -25,11 +25,10 @@ SECRET_KEY = 'django-insecure-5qq=e42p8%$^yc!yyy6e#((x#*813@-%m2$ix$28ebq1b&)xuz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.spacemate.in']
 
 import os
 # Application definition
-
 
 
 
@@ -57,11 +56,14 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",
+    "https://spacemate.pythonanywhere.com",
+    "https://www.spacemate.in"
 ]
 CORES_ORIGIN_WHITELIST = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",
-
+    "https://spacemate.pythonanywhere.com",
+    "https://www.spacemate.in"
 ]
 # from django.core.mail import send_mail
 
@@ -79,6 +81,7 @@ CORES_ORIGIN_WHITELIST = [
 
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -95,7 +98,7 @@ ROOT_URLCONF = 'comp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'build1')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,12 +117,32 @@ WSGI_APPLICATION = 'comp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'spacemate$default',
+        'USER': 'spacemate',
+        'PASSWORD': 'Space@123',
+        'HOST': 'spacemate.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+            'autocommit': True,
+            }
     }
 }
+
+#  'PASSWORD': 'Interior@mate#765',
+
+
+
+
 
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
@@ -133,10 +156,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-       
+
     ),
-    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':10
+    # 'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE':10
 }
 
 DJOSER = {
@@ -154,9 +177,9 @@ DJOSER = {
     "PASSWORD_RESET_CONFIRM_RETYPE":True,
     "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND":True,
 
-    
+
     "SERIALIZERS":{
-        
+
         # 'user_create':'app.serializers.UserCreateSerializer',
         # 'user':'app.serializers.UserCreateSerializer',
         # 'password_reset': 'djoser.email.PasswordResetEmail',
@@ -218,16 +241,18 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'build/static')
-]
-STATIC_URL_ROOT=os.path.join(BASE_DIR,'static')
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 
+MEDIA_URL = '/image/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'image')
+
+STATICFILES_DIRS = (
+    # os.path.join(BASE_DIR, 'build1/static'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 

@@ -5,7 +5,7 @@ from api.models import *
 #create serializers here
 
 
-    
+
 
 
 
@@ -18,12 +18,17 @@ class ItemSerializer(serializers.ModelSerializer):
         read_only_fields=('quotation',)
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Category
+        fields="__all__"
+
 
 class ItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Items
         fields="__all__"
-        
+
 
 class QuotationSerializer(serializers.ModelSerializer):
     item = ItemSerializer(many=True,read_only=False)
@@ -41,11 +46,8 @@ class QuotationSerializer(serializers.ModelSerializer):
 
         for choice in item:
             Item.objects.create(**choice,quotation=quotation)
-  
+
         return quotation
-    
-
- 
 
 
 
@@ -54,15 +56,27 @@ class QuotationSerializer(serializers.ModelSerializer):
 
 
 
- 
+
+
+
+
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model=Client
         fields="__all__"
-    
+
 
 
 class InventorysSerializer(serializers.ModelSerializer):
     class Meta:
         model=Inventorys
+        fields='__all__'
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=InteriorGallery
+        fields='__all__'
+class DesignGallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=DesignGallery
         fields='__all__'

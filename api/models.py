@@ -33,7 +33,20 @@ from django.db import models
 STATE_CHOICE = (
     ("AS PER DESIGN", "AS PER DESIGN"),
     ("LENGTH HEIGHT", "LENGTH HEIGHT"),
-   
+
+)
+IMAGE_CHOICE = (
+    ("commercial", "COMMERCIAL"),
+    ("home interior", "HOME INTERIOR"),
+    ("retail shop", "RETAIL SHOP"),
+
+
+)
+IMAGE_CHOICE2 = (
+    ("2D", "2D"),
+    ("3D", "3D"),
+
+
 )
 UNIT = (
     ("SQR METER", "SQR METER"),
@@ -42,8 +55,10 @@ UNIT = (
     ("SQR FOOT", "SQR FOOT"),
     ("RUNNING FOOT", "RUNNING FOOT"),
     ("NUMBERS", "NUMBERS"),
-    
-   
+    ("APPROXIMATE","APPROXIMATE"),
+    ("LUMPSUM","LUMPSUM"),
+
+
 )
 
 
@@ -72,9 +87,10 @@ class Quotation(models.Model):
     special_note=models.CharField(max_length=100,blank=True,null=True)
     discount=models.IntegerField(null=True,blank=True)
     total_with_discount=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    date=models.CharField(max_length=100,blank=True,null=True)
 
 
-    
+
 
 
     def __str__(self):
@@ -94,6 +110,7 @@ class Item(models.Model):
 
     height=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     length=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    sqft=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
     item_id=models.IntegerField(null=True,blank=True)
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
@@ -102,7 +119,7 @@ class Item(models.Model):
 
     numbers=models.IntegerField(null=True,blank=True)
     running_foot=models.IntegerField(null=True,blank=True)
-
+    quantity=models.IntegerField(null=True,blank=True,default=1)
     quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='item')
 
 
@@ -119,18 +136,26 @@ class Items(models.Model):
     item_category=models.CharField(max_length=100,null=True,blank=True)
     unit=models.CharField(max_length=100,blank=True,null=True,choices=UNIT)
 
-    height=models.IntegerField(null=True,blank=True)
-    width=models.IntegerField(null=True,blank=True)
-    length=models.IntegerField(null=True,blank=True)
-    depth=models.IntegerField(null=True,blank=True)
-    
-    numbers=models.IntegerField(null=True,blank=True)
-    running_foot=models.IntegerField(null=True,blank=True)
+    height=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    width=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    length=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    depth=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    sqft=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    numbers=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    running_foot=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
- 
+
     def __str__(self):
         return self.item_name
+
+# independent
+class Category(models.Model):
+    category=models.CharField(max_length=100,null=True,blank=True)
+
+
+    def __str__(self):
+        return self.category
 
 
 class Inventorys(models.Model):
@@ -139,5 +164,23 @@ class Inventorys(models.Model):
     rate=models.IntegerField(null=True)
     total_quantity=models.IntegerField(null=True,blank=True)
     unit=models.CharField(max_length=100,null=True)
+
+class InteriorGallery(models.Model):
+    image = models.ImageField(upload_to='images', null=True)
+    imageName=models.CharField(max_length=100,null=True)
+    tag=models.CharField(max_length=100,null=True,choices=IMAGE_CHOICE)
+
+    def __str__(self):
+        return self.imageName
+class DesignGallery(models.Model):
+    image = models.ImageField(upload_to='images', null=True)
+    imageName=models.CharField(max_length=100,null=True)
+
+    tag=models.CharField(max_length=100,null=True,choices=IMAGE_CHOICE2)
+
+    def __str__(self):
+        return self.imageName
+
+
 
 # unit pageination client id
