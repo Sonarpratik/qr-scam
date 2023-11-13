@@ -31,9 +31,12 @@ class QuotationViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         user_client_id = self.request.query_params.get('user_client_id')
+        quotation_number = self.request.query_params.get('quotation_number')
 
         if user_client_id:
             queryset = queryset.filter(user_client_id=user_client_id)
+        if quotation_number:
+            queryset = queryset.filter(quotation_number=quotation_number)
 
         return queryset
 
@@ -44,6 +47,8 @@ from django.db.models import Q
 class ItemViewSet(viewsets.ModelViewSet):
     queryset=Item.objects.all()
     serializer_class=ItemSerializer
+    filter_backends=[SearchFilter]
+    # search_fields=['item_name','item_category']
     pagination_class = MyLimit
 
 
@@ -58,6 +63,11 @@ class ItemsViewSet(viewsets.ModelViewSet):
     filter_backends=[SearchFilter]
     search_fields=['item_name']
     pagination_class = MyLimit
+    def get_queryset(self):
+        item_category = self.request.query_params.get('item_category')
+        if item_category:
+            return Items.objects.filter(item_category=item_category)
+        return Items.objects.all()
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -82,7 +92,6 @@ class InventoysViewSet(viewsets.ModelViewSet):
     queryset=Inventorys.objects.all()
     serializer_class=InventorysSerializer
 
-
 class ImageViewSet(viewsets.ModelViewSet):
     queryset=InteriorGallery.objects.all()
     serializer_class=ImageSerializer
@@ -92,6 +101,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 class DesignGalleryViewSet(viewsets.ModelViewSet):
     queryset=DesignGallery.objects.all()
     serializer_class=DesignGallerySerializer
+
 
 
 

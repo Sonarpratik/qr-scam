@@ -35,19 +35,6 @@ STATE_CHOICE = (
     ("LENGTH HEIGHT", "LENGTH HEIGHT"),
 
 )
-IMAGE_CHOICE = (
-    ("commercial", "COMMERCIAL"),
-    ("home interior", "HOME INTERIOR"),
-    ("retail shop", "RETAIL SHOP"),
-
-
-)
-IMAGE_CHOICE2 = (
-    ("2D", "2D"),
-    ("3D", "3D"),
-
-
-)
 UNIT = (
     ("SQR METER", "SQR METER"),
     ("MILI METER", "MILI METER"),
@@ -61,7 +48,19 @@ UNIT = (
 
 )
 
+IMAGE_CHOICE = (
+    ("COMMERCIAL", "COMMERCIAL"),
+    ("HOME INTERIOR", "HOME INTERIOR"),
+    ("RETAIL SHOP", "RETAIL SHOP"),
 
+
+)
+IMAGE_CHOICE2 = (
+    ("2D", "2D"),
+    ("3D", "3D"),
+
+
+)
 
 class Client(models.Model):
     contact_person_name=models.CharField(max_length=100,blank=True,null=True)
@@ -88,7 +87,7 @@ class Quotation(models.Model):
     discount=models.IntegerField(null=True,blank=True)
     total_with_discount=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     date=models.CharField(max_length=100,blank=True,null=True)
-
+    revision_no=models.CharField(max_length=100,blank=True,null=True)
 
 
 
@@ -111,15 +110,19 @@ class Item(models.Model):
     height=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     length=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     sqft=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    width=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    depth=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
     item_id=models.IntegerField(null=True,blank=True)
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     total=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
 
-    numbers=models.IntegerField(null=True,blank=True)
-    running_foot=models.IntegerField(null=True,blank=True)
+    numbers=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    running_foot=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     quantity=models.IntegerField(null=True,blank=True,default=1)
+    specifications=models.CharField(max_length=100,blank=True,null=True)
+
     quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='item')
 
 
@@ -135,15 +138,16 @@ class Items(models.Model):
     item_name=models.CharField(max_length=100,null=True,blank=True)
     item_category=models.CharField(max_length=100,null=True,blank=True)
     unit=models.CharField(max_length=100,blank=True,null=True,choices=UNIT)
-
     height=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+
     width=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
-    length=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     depth=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+
+    length=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     sqft=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     numbers=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     running_foot=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
-
+    specifications=models.CharField(max_length=100,blank=True,null=True)
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
 
     def __str__(self):
@@ -165,21 +169,28 @@ class Inventorys(models.Model):
     total_quantity=models.IntegerField(null=True,blank=True)
     unit=models.CharField(max_length=100,null=True)
 
+
 class InteriorGallery(models.Model):
-    image = models.ImageField(upload_to='images', null=True)
+    image = models.ImageField(upload_to='img/', null=True)
     imageName=models.CharField(max_length=100,null=True)
     tag=models.CharField(max_length=100,null=True,choices=IMAGE_CHOICE)
 
     def __str__(self):
         return self.imageName
 class DesignGallery(models.Model):
-    image = models.ImageField(upload_to='images', null=True)
+    image = models.ImageField(upload_to='img/', null=True)
     imageName=models.CharField(max_length=100,null=True)
 
     tag=models.CharField(max_length=100,null=True,choices=IMAGE_CHOICE2)
 
     def __str__(self):
         return self.imageName
+
+
+
+
+
+
 
 
 

@@ -48,7 +48,14 @@ class QuotationSerializer(serializers.ModelSerializer):
             Item.objects.create(**choice,quotation=quotation)
 
         return quotation
-
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=InteriorGallery
+        fields='__all__'
+class DesignGallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=DesignGallery
+        fields='__all__'
 
 
 
@@ -70,13 +77,4 @@ class ClientSerializer(serializers.ModelSerializer):
 class InventorysSerializer(serializers.ModelSerializer):
     class Meta:
         model=Inventorys
-        fields='__all__'
-
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=InteriorGallery
-        fields='__all__'
-class DesignGallerySerializer(serializers.ModelSerializer):
-    class Meta:
-        model=DesignGallery
         fields='__all__'
