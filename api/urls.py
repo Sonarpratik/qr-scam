@@ -23,4 +23,6 @@ router.register('designimage',views.DesignGalleryViewSet,basename='designimage')
 
 urlpatterns = [
     path('',include(router.urls)),
+    path('quotation-number-count/', QuotationNumberCountView.as_view(), name='quotation_number_count'),
+    path('items-number-count/', ItemsViewStatistic.as_view(), name='items_number_count'),
 ]

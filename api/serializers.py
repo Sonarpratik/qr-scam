@@ -23,6 +23,10 @@ class CategorySerializer(serializers.ModelSerializer):
         model=Category
         fields="__all__"
 
+class StatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Status
+        fields="__all__"
 
 class ItemsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,6 +40,7 @@ class QuotationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Quotation
+
         fields="__all__"
         # exclude = ['user']
 

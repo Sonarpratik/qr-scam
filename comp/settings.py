@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5qq=e42p8%$^yc!yyy6e#((x#*813@-%m2$ix$28ebq1b&)xuz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.spacemate.in']
+ALLOWED_HOSTS = ['www.spacemate.in','127.0.0.1', 'localhost']
 
 import os
 # Application definition
@@ -117,26 +117,26 @@ WSGI_APPLICATION = 'comp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'spacemate$default',
-        'USER': 'spacemate',
-        'PASSWORD': 'Space@123',
-        'HOST': 'spacemate.mysql.pythonanywhere-services.com',
-        'OPTIONS': {
-            'autocommit': True,
-            }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'spacemate$default',
+#         'USER': 'spacemate',
+#         'PASSWORD': 'Space@123',
+#         'HOST': 'spacemate.mysql.pythonanywhere-services.com',
+#         'OPTIONS': {
+#             'autocommit': True,
+#             }
+#     }
+# }
 
 #  'PASSWORD': 'Interior@mate#765',
 

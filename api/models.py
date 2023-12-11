@@ -83,12 +83,13 @@ class Quotation(models.Model):
     client_name=models.CharField(max_length=100,blank=True,null=True)
     client_address=models.CharField(max_length=100,blank=True,null=True)
     client_contact=models.CharField(max_length=100,blank=True,null=True)
-    special_note=models.CharField(max_length=100,blank=True,null=True)
+    special_note=models.CharField(max_length=500,blank=True,null=True)
+    remark=models.CharField(max_length=500,blank=True,null=True)
     discount=models.IntegerField(null=True,blank=True)
     total_with_discount=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     date=models.CharField(max_length=100,blank=True,null=True)
     revision_no=models.CharField(max_length=100,blank=True,null=True)
-
+    status=models.CharField(max_length=100,blank=True,null=True)
 
 
 
@@ -120,8 +121,8 @@ class Item(models.Model):
 
     numbers=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     running_foot=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
-    quantity=models.IntegerField(null=True,blank=True,default=1)
-    specifications=models.CharField(max_length=100,blank=True,null=True)
+    quantity=models.DecimalField(null=True,blank=True,default=1,max_digits=20,decimal_places=2)
+    specifications=models.CharField(max_length=500,blank=True,null=True)
 
     quotation=models.ForeignKey(Quotation,on_delete=models.CASCADE,related_name='item')
 
@@ -147,8 +148,9 @@ class Items(models.Model):
     sqft=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     numbers=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     running_foot=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
-    specifications=models.CharField(max_length=100,blank=True,null=True)
+    specifications=models.CharField(max_length=500,blank=True,null=True)
     costing=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
+    quantity=models.DecimalField(null=True,blank=True,default=1,max_digits=20,decimal_places=2)
 
     def __str__(self):
         return self.item_name
@@ -160,6 +162,15 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category
+
+
+#independent
+class Status(models.Model):
+    status=models.CharField(max_length=100,null=True,blank=True)
+
+
+    def __str__(self):
+        return self.status
 
 
 class Inventorys(models.Model):
