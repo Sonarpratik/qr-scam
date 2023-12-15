@@ -89,7 +89,7 @@ class Quotation(models.Model):
     total_with_discount=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
     date=models.CharField(max_length=100,blank=True,null=True)
     revision_no=models.CharField(max_length=100,blank=True,null=True)
-    status=models.CharField(max_length=100,blank=True,null=True)
+    status=models.IntegerField(blank=True,null=True)
 
 
 

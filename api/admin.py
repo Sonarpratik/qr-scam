@@ -12,10 +12,12 @@ admin.site.site_header="Spacemate"
 admin.site.site_title="Spacemate"
 admin.site.index_title="Spacemate"
 admin.site.register(Quotation)
-admin.site.register(InteriorGallery)
-admin.site.register(DesignGallery)
 # admin.site.register(User)
 admin.site.register(Items)
+admin.site.register(Category)
+admin.site.register(Status)
+admin.site.register(InteriorGallery)
+admin.site.register(DesignGallery)
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
