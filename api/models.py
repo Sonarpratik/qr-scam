@@ -73,7 +73,8 @@ class Client(models.Model):
     email=models.CharField(max_length=100,blank=True,null=True)
     phone=models.CharField(max_length=100,blank=True,null=True)
     site_address=models.CharField(max_length=100,blank=True,null=True)
-
+    
+from datetime import datetime
 class Quotation(models.Model):
     quotation_number=models.CharField(max_length=100,blank=True,null=True,default="20")
 
@@ -87,7 +88,7 @@ class Quotation(models.Model):
     remark=models.CharField(max_length=500,blank=True,null=True)
     discount=models.IntegerField(null=True,blank=True)
     total_with_discount=models.DecimalField(null=True,blank=True,max_digits=20,decimal_places=2)
-    date=models.CharField(max_length=100,blank=True,null=True)
+    date=models.CharField(max_length=100,blank=True,null=True,default=datetime.now().strftime("%d/%m/%y"))
     revision_no=models.CharField(max_length=100,blank=True,null=True)
     status=models.IntegerField(blank=True,null=True)
 

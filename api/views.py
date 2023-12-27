@@ -2,16 +2,16 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.filters import SearchFilter
 from api.models import *
+from api.serializers import *
+from .mypagination import MyLimit
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from .mypagination import MyLimit
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db.models import Count, Sum
 from django.db.models import Q
 
-from api.serializers import *
 
 # Create your views here.
 
@@ -157,22 +157,40 @@ class RevinueViewSet(APIView):
             return Response({"error": "Please provide a year"}, status=400)
 
 
+from datetime import datetime
 class QuotationViewSet(viewsets.ModelViewSet):
     queryset = Quotation.objects.all()
     serializer_class = QuotationSerializer
     pagination_class = MyLimit
 
+# Get the current date
+    class Meta:
+        model = Quotation
+        fields = '__all__'
+
+   
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         # Save the data and return the serialized representation
-        # print(serializer)
+        print("hello")
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
+class QuotationViewSet2(viewsets.ModelViewSet):
+    queryset = Quotation.objects.all()
+    serializer_class = QuotationSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -277,6 +295,7 @@ class QuotationNumberCountView(APIView):
 
 
 class ItemViewSet(viewsets.ModelViewSet):
+    
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     filter_backends = [SearchFilter]
@@ -284,7 +303,13 @@ class ItemViewSet(viewsets.ModelViewSet):
     pagination_class = MyLimit
 
 
+
 class CategoryViewSet(viewsets.ModelViewSet):
+   
+    
+    # Format the date as dd/mm/yy
+    formatted_date = datetime.now().strftime("%d/%m/%y")
+    
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "app",
     "corsheaders",
     "django_filters",
+    "vendor",
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
