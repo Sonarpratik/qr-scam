@@ -1,10 +1,12 @@
 from .models import *
 from .serializers import *
-from rest_framework import generics
+
 # from djoser import views
 from djoser import views
 from django.http import JsonResponse
-
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -33,7 +35,7 @@ from rest_framework.decorators import api_view
 
 #multiple
 @api_view(["GET"])
-def userinfo2(request):
+def userinfo(request):
     user = request.user
     if user.is_authenticated:
         profile = UserProfile.objects.get(user=user)
@@ -56,25 +58,57 @@ def userinfo2(request):
         return Response({"message": "login first"})
     
 
-#single
-@api_view(["GET"])
-def userinfo(request):
-    user = request.user
-    if user.is_authenticated:
-        profile = UserProfile.objects.get(user=user)
-        if profile.is_admin == True:
-            data = {"username": user.username, "email": user.email, "roll": "ADMIN"}
-            return Response(data)
-        elif profile.is_staff == True:
-            data = {"username": user.username, "email": user.email, "roll": "STAFF"}
-            return Response(data)
-        elif profile.is_customer == True:
-            data = {"username": user.username, "email": user.email, "roll": "CUSTOMER"}
-            return Response(data)
-      
-       
-        else:
-            data = {"message": "you are not valid user"}
-            return Response(data)
-    else:
-        return Response({"message": "login first"})
+
+
+
+    
+from rest_framework import viewsets, status
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    
+    queryset = UserProfile.objects.all()
+    serializer_class = ProfileSerializer
+
+from django.shortcuts import render
+from django.contrib.auth.models import User
+
+def get_all_users(request):
+    all_users = User.objects.all()
+    user_data = [{'id': user.id, 'username': user.username} for user in all_users]
+    return JsonResponse({'users': user_data})
+
+
+class UserRegistrationView(generics.CreateAPIView):
+    serializer_class = UserRegistrationSerializer
+    authentication_classes = [] 
+    def perform_create(self, serializer):
+        # Set is_active to False by default
+        serializer.save()
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+# views.py
+
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from app.models import UserAccount
+from app.serializers import UserSerializer
+
+class UserDetailView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def retrieve(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)

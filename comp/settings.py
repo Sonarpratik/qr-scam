@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5qq=e42p8%$^yc!yyy6e#((x#*813@-%m2$ix$28ebq1b&)xuz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.spacemate.in','127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 import os
 # Application definition
@@ -48,23 +48,17 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework.authtoken',
     'djoser',
-    "api",
     "app",
     "corsheaders",
     "django_filters",
-    "vendor",
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",
-    "https://spacemate.pythonanywhere.com",
-    "https://www.spacemate.in"
 ]
 CORES_ORIGIN_WHITELIST = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",
-    "https://spacemate.pythonanywhere.com",
-    "https://www.spacemate.in"
 ]
 # from django.core.mail import send_mail
 
@@ -177,11 +171,14 @@ DJOSER = {
     'SEND_ACTIVATION_EMAIL': True,
     "PASSWORD_RESET_CONFIRM_RETYPE":True,
     "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND":True,
-
+    # "VIEW_SETS": {
+    #     "registration": "app.views.UserRegistrationView",
+    #     # Other Djoser view sets...
+    # },
 
     "SERIALIZERS":{
-
-        # 'user_create':'app.serializers.UserCreateSerializer',
+        # 'login': 'app.serializers.CustomLoginSerializer',
+        'user_create':'app.serializers.UserRegistrationSerializer',
         # 'user':'app.serializers.UserCreateSerializer',
         # 'password_reset': 'djoser.email.PasswordResetEmail',
         'current_user':'app.serializers.UserCreateSerializer',
@@ -263,7 +260,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# AUTH_USER_MODEL = 'app.UserAccount'
+AUTH_USER_MODEL = "app.UserAccount"
 
 
 # AUTH_USER_MODEL="app.UserAccount"

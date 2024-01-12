@@ -2,12 +2,12 @@ from rest_framework import serializers
 from app.models import *
 from djoser.serializers import UserCreateSerializer
 from django.contrib.auth import get_user_model
-UserAccount = get_user_model()
+User = get_user_model()
 
 class UserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
-        model=UserAccount
-        fields=('__all__')
+        model=User
+        fields=("__all__")
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
@@ -48,21 +48,22 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 from django.contrib.auth.password_validation import validate_password
 
-from djoser.serializers import UserCreateSerializer
-from app.models import UserAccount
-
-class UserRegistrationSerializer(UserCreateSerializer):
-    class Meta(UserCreateSerializer.Meta):
-        model = UserAccount
-        fields = '__all__'
+class UserRegistrationSerializer(serializers.ModelSerializer):
+   class Meta:
+        model=UserAccount
+        fields="__all__"
 
 
-# serializers.py
-
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
 from rest_framework import serializers
-from app.models import UserAccount  # Replace with your actual model
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserAccount
-        fields = ('__all__')  # Add other fields as needed
+class CustomLoginSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(style={'input_type': 'password'}, trim_whitespace=False, required=True)
+
+    def validate(self, data):
+        # Your custom validation logic here
+        # For example, check if the user is active or anything specific to your application
+        return data
