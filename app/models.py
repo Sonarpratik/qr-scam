@@ -10,10 +10,10 @@ class UserAccount(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
     phonenumber = models.CharField(max_length=100, unique=True,blank=True,null=True)
 
-    is_superuser = models.BooleanField(default=False)
-    is_super = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=True)
+    # is_super = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     is_customer = models.BooleanField(default=False)
 
     def __str__(self):
