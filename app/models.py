@@ -15,6 +15,7 @@ class UserAccount(AbstractUser):
     access_for=models.CharField(max_length=100, blank=True,null=True)
     is_superuser = models.BooleanField(default=False)
     # is_super = models.BooleanField(default=False)
+    
     education = models.BooleanField(default=False)
     career = models.BooleanField(default=False)
     micro_bussiness = models.BooleanField(default=False)

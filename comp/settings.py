@@ -38,7 +38,7 @@ import os
 
 
 INSTALLED_APPS = [
-    # 'django.contrib.auth',
+ 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,10 +55,12 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:3008",
+    "https://aumbeeco.pythonanywhere.com"
 ]
 CORES_ORIGIN_WHITELIST = [
     "http://127.0.0.1:5173",
     "http://localhost:3008",
+    "https://aumbeeco.pythonanywhere.com"
 ]
 # from django.core.mail import send_mail
 
