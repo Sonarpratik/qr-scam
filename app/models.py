@@ -54,3 +54,13 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+
+class DocModel(models.Model):
+    
+    name = models.CharField(max_length=100, blank=True,null=True)
+    moon_board = models.FileField(upload_to='mood_boards/', blank=True, null=True)
+
+
+
+    def __str__(self):
+        return self.name

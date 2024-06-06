@@ -45,11 +45,17 @@ class ProfileSerializer(serializers.ModelSerializer):
         model=UserProfile
         fields="__all__"
 
+class DocSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=DocModel
+        fields="__all__"
+
 
 from django.contrib.auth.password_validation import validate_password
 
 from djoser.serializers import UserCreateSerializer
 from app.models import UserAccount
+
 
 class UserRegistrationSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):

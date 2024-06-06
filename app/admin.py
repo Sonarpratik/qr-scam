@@ -22,6 +22,7 @@ from django.contrib import admin
 # admin.site.register(Song)
 # admin.site.register(UserAccount)
 admin.site.register(UserAccount, UserAccountAdmin)
+admin.site.register(DocModel)
 # admin.site.register(Singer)
 admin.site.site_header="Aumbeeco"
 admin.site.site_title="Aumbeeco"

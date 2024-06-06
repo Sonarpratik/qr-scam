@@ -16,6 +16,7 @@ router=routers.DefaultRouter()
 # router.register('singer',views.SingerViewSet,basename='singer')
 # router.register('song',views.SongViewSet,basename='song')
 router.register('profile',views.ProfileViewSet,basename='profile')
+router.register('doc',views.DocViewSet,basename='doc')
 urlpatterns = [
     path('',include(router.urls)),
     path('change_password/<int:pk>/', ChangePasswordView.as_view(), name='auth_change_password'),
@@ -23,7 +24,7 @@ urlpatterns = [
     path('userinfo', views.userinfo, name="userinfo"),
     path('user', views.get_all_users, name="user"),
     path('register/', UserRegistrationView.as_view(), name='user-registration'),
-      path('me/', UserDetailView.as_view(), name='user-detail'),
+    path('me/', UserDetailView.as_view(), name='user-detail'),
     # path('login/', CustomLoginView.as_view(), name='custom_login'),
     #  path('login/', custom_login_view, name='custom_login'),
     # path('login/', UserLoginView.as_view(), name='user-login'),
